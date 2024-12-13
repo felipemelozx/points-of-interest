@@ -27,6 +27,10 @@ public class PointController {
     return pointService.getPoints(requestDto);
   }
 
+  @GetMapping(path = "/get-all")
+  public List<PointDto> getAllPoints(){
+    return pointService.findAll();
+  }
   @PostMapping(path = "/save-point")
   public void createPoint(@RequestBody PointDto pointDto){
      pointService.createPoint(pointDto);

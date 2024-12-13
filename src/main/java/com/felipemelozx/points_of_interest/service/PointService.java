@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PointService {
@@ -53,5 +55,11 @@ public class PointService {
         pointRepository.save(new Point(pointDto));
       }
     }
+  }
+
+  public List<PointDto> findAll() {
+  return pointRepository.findAll().stream()
+              .map(PointDto::new).toList();
+
   }
 }
