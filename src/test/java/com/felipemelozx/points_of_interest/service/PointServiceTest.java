@@ -93,6 +93,19 @@ class PointServiceTest {
   }
 
   @Test
-  void findAll() {
+  void findAllCaseSuccess() {
+    when(pointRepository.findAll()).thenReturn(points);
+
+    var request = pointService.findAll();
+    assertEquals(7, request.size());
+
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      PointDto pointDto = request.get(i);
+
+      assertEquals(point.getName(), pointDto.name());
+      assertEquals(point.getCoordinateX(), pointDto.coordinateX());
+      assertEquals(point.getCoordinateY(), pointDto.coordinateY());
+    }
   }
 }
