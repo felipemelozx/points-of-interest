@@ -4,7 +4,6 @@ import com.felipemelozx.points_of_interest.dto.GetPointDto;
 import com.felipemelozx.points_of_interest.dto.PointDto;
 import com.felipemelozx.points_of_interest.entity.Point;
 import com.felipemelozx.points_of_interest.repository.PointRepository;
-import jakarta.servlet.http.PushBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PointServiceTest {
@@ -81,7 +80,16 @@ class PointServiceTest {
 
   @Test
   void createManyPoint() {
+    PointDto requestDto1 = new PointDto("Buteco", 20L, 10L);
+    PointDto requestDto2 = new PointDto("lanchonete", 40L, 20L);
+    PointDto requestDto3 = new PointDto("mercadinho", 30L, 15L);
 
+    List<PointDto> savedListPoint = List.of(requestDto1, requestDto2, requestDto3);
+
+
+    pointService.createManyPoint(savedListPoint);
+
+    verify(pointRepository, atLeast(3)).save(any(Point.class));
   }
 
   @Test
