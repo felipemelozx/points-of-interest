@@ -17,7 +17,8 @@ public class PointController {
   public PointController(PointService pointService) {
     this.pointService = pointService;
   }
-  @PostMapping(path = "/salve-many-points")
+
+  @PostMapping(path = "/save-many-points")
   public void createManyPoint(@RequestBody Map<String, List<PointDto>> body){
     List<PointDto> pointDto = body.get("listPointDto");
     pointService.createManyPoint(pointDto);
