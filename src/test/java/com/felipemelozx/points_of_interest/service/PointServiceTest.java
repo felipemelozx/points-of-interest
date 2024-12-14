@@ -4,6 +4,7 @@ import com.felipemelozx.points_of_interest.dto.GetPointDto;
 import com.felipemelozx.points_of_interest.dto.PointDto;
 import com.felipemelozx.points_of_interest.entity.Point;
 import com.felipemelozx.points_of_interest.repository.PointRepository;
+import jakarta.servlet.http.PushBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,11 +12,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,11 +64,24 @@ class PointServiceTest {
   }
 
   @Test
-  void createPoint() {
+  void createPointCaseSuccess() {
+    PointDto requestDto = new PointDto("Buteco", 20L, 10L);
+    Point savedPoint = new Point(requestDto);
+    PointDto expectedPointDto = new PointDto(savedPoint);
+
+
+    when(pointRepository.save(any(Point.class))).thenReturn(savedPoint);
+
+    PointDto response = pointService.createPoint(requestDto);
+
+    assertEquals(response.name(), requestDto.name(), "The returned point must have a name correct.");
+    assertEquals(response.coordinateX(), requestDto.coordinateX(), "The returned point must have the correct X coordinate.");
+    assertEquals(response.coordinateY(), requestDto.coordinateY(), "The returned point must have the correct Y coordinate.");
   }
 
   @Test
   void createManyPoint() {
+
   }
 
   @Test

@@ -31,9 +31,14 @@ public class PointController {
   public List<PointDto> getAllPoints(){
     return pointService.findAll();
   }
+
   @PostMapping(path = "/save-point")
-  public void createPoint(@RequestBody PointDto pointDto){
-     pointService.createPoint(pointDto);
+  public PointDto createPoint(@RequestBody PointDto pointDto){
+     var res =pointService.createPoint(pointDto);
+      if(res == null){
+        throw new RuntimeException("Point not save!");
+      }
+      return res;
   }
 
 }

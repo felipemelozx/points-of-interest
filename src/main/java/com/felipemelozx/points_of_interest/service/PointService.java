@@ -41,12 +41,12 @@ public class PointService {
       return responseDtoList;
   }
 
-  public void createPoint(PointDto pointDto){
-    if(pointDto.coordinateX() < 0 && pointDto.coordinateY() < 0 ){
-      return;
+  public PointDto createPoint(PointDto pointDto){
+    if(pointDto.coordinateX() < 0 || pointDto.coordinateY() < 0 ){
+      return null;
     }
 
-    pointRepository.save(new Point(pointDto));
+    return new PointDto(pointRepository.save(new Point(pointDto)));
   }
 
   public void createManyPoint(List<PointDto> listPointDto) {
